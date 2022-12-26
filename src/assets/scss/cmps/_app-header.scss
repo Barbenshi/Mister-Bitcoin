@@ -1,0 +1,14 @@
+.app-header{
+    .logo{
+        cursor: pointer;
+    }
+    a{
+        color: white;
+        &:not(:last-of-type){
+            padding-inline-end: 10px;
+        }
+        &.active{
+            color: rgb(37, 34, 34);
+        }
+    }
+}

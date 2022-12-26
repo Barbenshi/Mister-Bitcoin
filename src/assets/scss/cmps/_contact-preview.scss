@@ -1,0 +1,35 @@
+.contact-preview {
+    background-color: #e91e620b;
+    box-shadow: 2px 2px 11px rgb(43 17 74 / 17%);
+    border-radius: 3px;
+    display: flex;
+    flex-direction: column;
+    background-repeat: no-repeat;
+    background-size: 60%;
+    background-position: bottom right;
+    overflow: hidden;
+    cursor: pointer;
+
+    .info {
+        padding: 10px;
+        flex-grow: 1;
+    }
+
+    .actions {
+        flex-basis: 25%;
+        padding: 10px;
+        background-color: #000000c9;
+        display: flex;
+        align-items: center;
+        transform: translateY(100%);
+        transition: transform 0.2s;
+    }
+
+    &:hover .actions {
+        transform: translateY(0);
+    }
+
+    a:hover{
+        text-decoration: none;
+    }
+}
