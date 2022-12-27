@@ -1,0 +1,13 @@
+.sign-up {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  .img-container {
+    width: 344px;
+    margin: auto;
+  }
+  label{
+    padding-inline-end:5px
+  }
+}

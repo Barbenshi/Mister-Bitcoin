@@ -1,0 +1,11 @@
+.moves-list{
+    background-color: $clr3;
+    padding: 10px;
+    border-radius: 1em;
+    margin-block-end:10px;
+    ul{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+}

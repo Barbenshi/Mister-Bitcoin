@@ -17,12 +17,15 @@
 @import "./views/contact-details";
 @import "./views/contact-edit";
 @import "./views/app-home";
+@import "./views/signup";
 
 // Components
 @import "./cmps/contact-list";
 @import "./cmps/contact-preview";
 @import "./cmps/contact-filter";
 @import "./cmps/app-header";
+@import "./cmps/transfer-fund";
+@import "./cmps/moves-list";
 
 
 
@@ -35,9 +38,6 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
-    .app-header {
-        background-color: #e91e63;
-    }
 
     main {
         flex-grow: 1;

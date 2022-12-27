@@ -50,9 +50,9 @@ export class ContactFilter extends Component {
         return (
             <form className='contact-filter'>
                 <section>
-                    <label htmlFor="term">Search</label>
+                    <label htmlFor="term">Search Contact</label>
                     <input ref={this.handleRef} onChange={this.handleChange}
-                    placeholder="Search.." value={term} type="text" name="term" id="term" />
+                    placeholder="Puki Ben David for example..." value={term} type="text" name="term" id="term" />
                 </section>
             </form>
         )
