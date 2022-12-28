@@ -8,10 +8,11 @@ import { ContactEdit } from './views/ContactEdit'
 import { SignUp } from './views/SignUp'
 
 import { HashRouter as Router, Navigate, Route, Routes, useNavigate } from 'react-router-dom'
-import { userService } from './services/user.service';
+import { useSelector } from 'react-redux';
+
 
 function PrivateRoute(cmp) {
-    const user = userService.query()
+    const user = useSelector(state => state.userModule.loggedInUser)
     return user ? cmp : <Navigate to="/signup" />
 }
 

@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/Mister-Bitcoin/static/css/main.aca256c3.css",
-    "main.js": "/Mister-Bitcoin/static/js/main.483316b6.js",
+    "main.css": "/Mister-Bitcoin/static/css/main.6d2c0543.css",
+    "main.js": "/Mister-Bitcoin/static/js/main.ff31dc02.js",
     "static/js/787.616357b9.chunk.js": "/Mister-Bitcoin/static/js/787.616357b9.chunk.js",
     "static/media/bitcoin.png": "/Mister-Bitcoin/static/media/bitcoin.021b6a103313153ed968.png",
     "static/media/Montserrat-SemiBold.ttf": "/Mister-Bitcoin/static/media/Montserrat-SemiBold.d5e0cc788cba9ced1fb9.ttf",
@@ -10,12 +10,12 @@
     "static/media/bee.svg": "/Mister-Bitcoin/static/media/bee.adcdf2238251f2f48f02762b3954b546.svg",
     "index.html": "/Mister-Bitcoin/index.html",
     "static/media/logo.svg": "/Mister-Bitcoin/static/media/logo.7dd67835d34d19bde4b509da1f329f57.svg",
-    "main.aca256c3.css.map": "/Mister-Bitcoin/static/css/main.aca256c3.css.map",
-    "main.483316b6.js.map": "/Mister-Bitcoin/static/js/main.483316b6.js.map",
+    "main.6d2c0543.css.map": "/Mister-Bitcoin/static/css/main.6d2c0543.css.map",
+    "main.ff31dc02.js.map": "/Mister-Bitcoin/static/js/main.ff31dc02.js.map",
     "787.616357b9.chunk.js.map": "/Mister-Bitcoin/static/js/787.616357b9.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.aca256c3.css",
-    "static/js/main.483316b6.js"
+    "static/css/main.6d2c0543.css",
+    "static/js/main.ff31dc02.js"
   ]
 }

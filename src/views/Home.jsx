@@ -39,9 +39,12 @@ export const Home = () => {
             <div className="content-container flex column justify-center">
 
                 <img src={`https://robohash.org/set_set5/${name}`} alt="" />
+                <div className="details-container">
+
                 <span>Coins: {coins}</span>
                 <div className="btc">
                     <span>BTC: {btc}</span> <img src={bee} alt="" />
+                </div>
                 </div>
                 <MovesList moves={moves()} title={true} />
             </div>
