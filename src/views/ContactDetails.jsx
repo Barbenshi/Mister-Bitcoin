@@ -1,82 +1,70 @@
-import { Component } from 'react'
+import { useState } from 'react'
 import { contactService } from '../services/contact.service'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import { MovesList } from '../cmps/MovesList'
-import { userService } from '../services/user.service'
 import { TransferFund } from '../cmps/TransferFund'
 import { spendBalance } from '../store/actions/user.actions'
-import { connect } from 'react-redux'
-import { SignUp } from './SignUp'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
 
-class _ContactDetails extends Component {
+export const ContactDetails = () => {
 
-    state = {
-        contact: null
-    }
+    const [contact, setContact] = useState(null)
+    const params = useParams()
+    const navigate = useNavigate()
 
-    componentDidMount() {
-        this.loadContact()
-    }
+    const user = useSelector(state => state.userModule.loggedInUser)
+    const dispatch = useDispatch()
 
-    loadContact = async () => {
-        const { id: contactId } = this.props.match.params
+
+    useEffect(() => {
+        loadContact()
+    }, [])
+
+    const loadContact = async () => {
+        const { id: contactId } = params
         try {
             const contact = await contactService.getContactById(contactId)
-            this.setState({ contact })
+            setContact(contact)
         } catch (err) {
             console.log('err', err)
         }
     }
 
-    onBack = () => {
-        this.props.history.push('/contact')
+    const onBack = () => {
+        navigate('/contact')
     }
 
-    onTransferCoins = (ev) => {
+    const onTransferCoins = (ev) => {
         ev.preventDefault()
         const amount = +ev.target[0].value
-        this.props.spendBalance({ ...this.state.contact }, amount)
+        dispatch(spendBalance({ ...contact }, amount))
         ev.target[0].value = ''
     }
 
-    get moves() {
-        const { user } = this.props
-        return user.moves.filter(move => move.toId === this.state.contact._id)
+    const moves = () => {
+        return user.moves.filter(move => move.toId === contact._id)
     }
 
-    render() {
-        const { contact } = this.state
-        if (!contact) return <div>Loading...</div>
-        if (!this.props.user) return <div><p>Must Sign-Up First...</p><SignUp /></div>
-        return (
-            <section className='contact-details'>
-                <div className="img-container">
-                    <img src={`https://robohash.org/set_set5/${contact._id}`} alt="" />
-                    <Link title='Edit contact' to={`/contact/edit/${contact._id}`} className="simple-button medium-button">📝</Link>
-                </div>
-                <section>
-                    <h3>Name: {contact.name}</h3>
-                </section>
-                <section>
-                    <h3>Phone number: {contact.phone}</h3>
-                </section>
-                <section>
-                    <address>Email address: {contact.email}</address>
-                </section>
-                <TransferFund onTransferCoins={this.onTransferCoins} name={contact.name} />
-                {this.moves && <MovesList moves={this.moves} />}
-                <button onClick={this.onBack}>Back</button>
+    if (!contact) return <div>Loading...</div>
+    return (
+        <section className='contact-details'>
+            <div className="img-container">
+                <img src={`https://robohash.org/set_set5/${contact._id}`} alt="" />
+                <Link title='Edit contact' to={`/contact/edit/${contact._id}`} className="simple-button medium-button">📝</Link>
+            </div>
+            <section>
+                <h3>Name: {contact.name}</h3>
             </section>
-        )
-    }
+            <section>
+                <h3>Phone number: {contact.phone}</h3>
+            </section>
+            <section>
+                <address>Email address: {contact.email}</address>
+            </section>
+            <TransferFund onTransferCoins={onTransferCoins} name={contact.name} />
+            {moves() && <MovesList moves={moves()} />}
+            <button onClick={onBack}>Back</button>
+        </section>
+    )
 }
-
-const mapStateToProps = state => ({
-    user: state.userModule.loggedInUser,
-})
-
-const mapDispatchToProps = {
-    spendBalance,
-}
-
-export const ContactDetails = connect(mapStateToProps, mapDispatchToProps)(_ContactDetails)

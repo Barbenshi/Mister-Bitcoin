@@ -8,8 +8,16 @@
         flex-direction: column;
         flex: 1;
     }
+    label{
+        font-family: Montserrat-SemiBold;
+    }
     input{
+        margin-top: 5px;
         flex: 1;
         width: 50%;
+        border: 1px solid $clr2;
+        &:focus{
+            outline: 0;
+        }
     }
 }

@@ -7,25 +7,29 @@ import { AppHeader } from './cmps/AppHeader'
 import { ContactEdit } from './views/ContactEdit'
 import { SignUp } from './views/SignUp'
 
-import { HashRouter as Router, Route, Switch } from 'react-router-dom'
+import { HashRouter as Router, Navigate, Route, Routes, useNavigate } from 'react-router-dom'
 import { userService } from './services/user.service';
 
+function PrivateRoute(cmp) {
+    const user = userService.query()
+    return user ? cmp : <Navigate to="/signup" />
+}
+
 function App() {
-    const loggedInUser = userService.query()
     return (
         <Router>
             <div className="main-app">
                 <AppHeader />
                 <main className='container'>
-                    <Switch>
-                        <Route path="/contact/edit/:id?" component={ContactEdit} />
-                        <Route path="/contact/:id" component={ContactDetails} />
-                        <Route path="/contact" component={ContactIndex} />
-                        <Route path="/stats" component={Statistic} />
-                        <Route path="/signup" component={SignUp} />
-                        <Route path="/" component={Home} />
-
-                    </Switch>
+                    <Routes>
+                        <Route path="/contact/edit/:id?" element={PrivateRoute(<ContactEdit />)} />
+                        <Route path="/contact/edit/" element={PrivateRoute(<ContactEdit />)} />
+                        <Route path="/contact/:id" element={PrivateRoute(<ContactDetails />)} />
+                        <Route path="/contact" element={<ContactIndex />} />
+                        <Route path="/stats" element={<Statistic />} />
+                        <Route path="/signup" element={<SignUp />} />
+                        <Route path="/" element={PrivateRoute(<Home />)} />
+                    </Routes>
                 </main>
 
                 <footer>

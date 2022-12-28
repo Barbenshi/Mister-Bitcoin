@@ -1,56 +1,40 @@
-import { Component } from 'react'
 import { ContactFilter } from '../cmps/ContactFilter'
 import { ContactList } from '../cmps/ContactList'
-import { contactService } from '../services/contact.service'
 import { Link } from 'react-router-dom'
+import { loadContacts, removeContact, setFilterBy } from '../store/actions/contact.actions'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
 
-export class ContactIndex extends Component {
+export const ContactIndex = () => {
 
-    state = {
-        contacts: null,
-        filterBy: {
-            term: ''
-        }
-    }
+    const dispatch = useDispatch()
+    const contacts = useSelector(state => state.contactModule.contacts)
+    const filterBy = useSelector(state => state.contactModule.filterBy)
 
-    componentDidMount() {
-        this.loadContacts()
-    }
 
-    loadContacts = async () => {
+    useEffect(()=>{
+        dispatch(loadContacts())
+    },[filterBy])
+
+    const onRemoveContact = async (contactId) => {
         try {
-            const contacts = await contactService.getContacts(this.state.filterBy)
-            this.setState({ contacts })
+            dispatch(removeContact(contactId))
         } catch (err) {
-            console.log('err:', err)
+            console.log('err', err)
         }
     }
 
-    onRemoveContact = async (contactId) => {
-        try {
-            await contactService.deleteContact(contactId)
-            this.setState(({ contacts }) => ({
-                contacts: contacts.filter(contact => contact._id !== contactId)
-            }))
-        } catch (err) {
-            console.log('err:', err)
-        }
+    const onChangeFilter = (filterBy) => {
+        dispatch(setFilterBy(filterBy))
     }
 
-    onChangeFilter = (filterBy) => {
-        this.setState({ filterBy }, this.loadContacts)
-    }
-
-    render() {
-        const { contacts, filterBy } = this.state
         if (!contacts) return <div>Loading...</div>
         return (
             <section className='contact-index'>
-                        <ContactFilter onChangeFilter={this.onChangeFilter} filterBy={filterBy} />
-                        <Link to="/contact/edit">Add new contact</Link>
-                        <ContactList onRemoveContact={this.onRemoveContact} contacts={contacts} />
+                <ContactFilter onChangeFilter={onChangeFilter} filterBy={filterBy} />
+                <Link to="/contact/edit">Add new contact</Link>
+                <ContactList onRemoveContact={onRemoveContact} contacts={contacts} />
             </section>
         )
-    }
 }
 

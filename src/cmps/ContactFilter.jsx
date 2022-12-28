@@ -1,31 +1,34 @@
-import { Component, createRef } from 'react'
+import {createRef } from 'react'
+import { useEffect } from 'react'
+import { useState } from 'react'
+import { useEffectUpdate } from '../customHooks/useEffectUpdate'
 
-export class ContactFilter extends Component {
+export const ContactFilter= (props) => {
 
-    state = {
-        filterBy: null
-    }
+    const [filterBy, setFilterBy] = useState(null)
 
-    typeInputRef = createRef()
+    const typeInputRef = createRef()
 
-    componentDidMount() {
-        const { filterBy } = this.props
-        // this.setState({ filterBy: { ...filterBy } }, () => this.inputRef.current.focus())
-        this.setState({ filterBy: { ...filterBy } })
-    }
+    useEffect(()=>{
+        const { filterBy } = props
+        setFilterBy({...filterBy})
+    },[])
 
-    handleRef = (elInput) => {
+    useEffectUpdate(()=>{
+        props.onChangeFilter({ ...filterBy })
+    },[filterBy])
+
+    const handleRef = (elInput) => {
         elInput?.focus()
     }
 
-
-    handleChange = ({ target }) => {
+    const handleChange = ({ target }) => {
         const field = target.name
         let value = target.value
         switch (target.type) {
             case 'number':
             case 'range':
-                value = +value
+                value = +value || ''
                 break;
             case 'checkbox':
                 value = target.checked
@@ -33,17 +36,9 @@ export class ContactFilter extends Component {
             default:
                 break;
         }
-
-
-        this.setState(
-            prevState => ({ filterBy: { ...prevState.filterBy, [field]: value } }),
-            () => this.props.onChangeFilter({ ...this.state.filterBy })
-        )
-
+        setFilterBy(prevFilterBy=>({...prevFilterBy,[field]:value}))
     }
 
-    render() {
-        const { filterBy } = this.state
         if (!filterBy) return <div>Loading...</div>
 
         const { term } = filterBy
@@ -51,10 +46,9 @@ export class ContactFilter extends Component {
             <form className='contact-filter'>
                 <section>
                     <label htmlFor="term">Search Contact</label>
-                    <input ref={this.handleRef} onChange={this.handleChange}
+                    <input ref={handleRef} onChange={handleChange}
                     placeholder="Puki Ben David for example..." value={term} type="text" name="term" id="term" />
                 </section>
             </form>
         )
-    }
 }
